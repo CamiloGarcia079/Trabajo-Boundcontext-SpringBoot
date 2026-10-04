@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: mindconnect
+  # Carga las credenciales locales desde .env si existe (raíz del proyecto o carpeta infrastructure)
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:../.env[.properties]
+  profiles:
+    active: dev
+
+server:
+  port: 8081

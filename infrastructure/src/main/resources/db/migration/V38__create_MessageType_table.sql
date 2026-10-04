@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS ${db_schema}.message_types (
+    id UUID PRIMARY KEY,
+    name_type VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+);

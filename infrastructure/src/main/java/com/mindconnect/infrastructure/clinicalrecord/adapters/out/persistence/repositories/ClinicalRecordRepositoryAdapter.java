@@ -1,0 +1,43 @@
+package com.mindconnect.infrastructure.clinicalrecord.adapters.out.persistence.repositories;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.mindconnect.domain.clinicalrecord.model.aggregate.ClinicalRecord;
+import com.mindconnect.domain.clinicalrecord.model.valueobject.ClinicalRecordId;
+import com.mindconnect.domain.clinicalrecord.port.repository.ClinicalRecordRepository;
+import com.mindconnect.infrastructure.clinicalrecord.adapters.out.persistence.mappers.ClinicalRecordPersistenceMapper;
+
+/**
+ * Adaptador: implementa el puerto del dominio usando Spring Data y el mapper.
+ */
+public class ClinicalRecordRepositoryAdapter implements ClinicalRecordRepository {
+
+    private final ClinicalRecordJpaRepository jpaRepository;
+    private final ClinicalRecordPersistenceMapper mapper;
+
+    public ClinicalRecordRepositoryAdapter(ClinicalRecordJpaRepository jpaRepository, ClinicalRecordPersistenceMapper mapper) {
+        this.jpaRepository = jpaRepository;
+        this.mapper = mapper;
+    }
+
+    @Override
+    public ClinicalRecord save(ClinicalRecord aggregate) {
+        return mapper.toDomain(jpaRepository.save(mapper.toJpa(aggregate)));
+    }
+
+    @Override
+    public Optional<ClinicalRecord> findById(ClinicalRecordId id) {
+        return jpaRepository.findById(id.value()).map(mapper::toDomain);
+    }
+
+    @Override
+    public List<ClinicalRecord> findAll() {
+        return jpaRepository.findAll().stream().map(mapper::toDomain).toList();
+    }
+
+    @Override
+    public void delete(ClinicalRecord aggregate) {
+        jpaRepository.deleteById(aggregate.id().value());
+    }
+}

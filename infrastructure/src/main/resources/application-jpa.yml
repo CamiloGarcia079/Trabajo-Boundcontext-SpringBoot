@@ -1,0 +1,19 @@
+# Perfil opcional: JPA "tradicional", como en la captura de clase.
+# Hibernate crea las tablas a partir de las entidades y Flyway queda apagado.
+#
+# Se usa junto con dev:   -Dspring-boot.run.profiles=dev,jpa
+#
+# CUIDADO: create-drop BORRA las tablas al arrancar y al apagar la aplicación.
+# Úsalo solo con una base de datos de pruebas, nunca con la que ya tiene datos de Flyway.
+# Hibernate arma las tablas desde las entidades, que guardan las llaves foráneas como UUID
+# simples; por eso en este modo no se crean las llaves foráneas que sí crean las migraciones.
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        "[hbm2ddl.create_namespaces]": true
+
+  flyway:
+    enabled: false

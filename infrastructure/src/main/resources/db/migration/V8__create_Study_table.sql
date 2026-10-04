@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS ${db_schema}.studies (
+    id UUID PRIMARY KEY,
+    name VARCHAR(40) NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+);
